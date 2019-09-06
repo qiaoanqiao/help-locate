@@ -26,7 +26,11 @@ return [
     'LOG_DIR' => null,
     'AUTO_RELOAD' => true,
     'MONGODB' => [
-
+        'dsn' => 'mongodb://127.0.0.1:27017',
+        'database'=> 'gps',
+        'POOL_MAX_NUM' => 8,
+        'POOL_TIME_OUT' => 0.1,
+        'timeout' => 5,
     ],
 
 ];

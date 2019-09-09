@@ -32,5 +32,16 @@ return [
         'POOL_TIME_OUT' => 0.1,
         'timeout' => 5,
     ],
+    'MYSQL'         => [
+        'host'                 => '127.0.0.1',
+        'port'                 => 3306,
+        'user'                 => 'gps',
+        'password'             => 'jbL8PbhXZWhdNyaz',
+        'database'             => 'gps',
+        'timeout'              => 30,
+        'charset'              => 'utf8mb4',
+        'connect_timeout'      => '5',//连接超时时间
+        'POOL_TIME_OUT'        => 0.1,
+    ],
 
 ];

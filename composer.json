@@ -18,7 +18,9 @@
         "easyswoole/easyswoole": "3.x",
         "easyswoole/swoole-ide-helper": "^1.0",
         "ext-mongodb": "*",
-        "mongodb/mongodb": "^1.4"
+        "easyswoole/mysqli": "^1.2",
+        "easyswoole/mysqli-pool": "^1.0",
+        "robmorgan/phinx": "^0.11.1"
     },
     "require-dev": {
         "composer/composer": "^1.6"

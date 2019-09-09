@@ -2,16 +2,14 @@
 
 namespace App\HttpController;
 
-use App\Models\User;
-use EasySwoole\Http\AbstractInterface\Controller;
-use MongoDB\Client;
-use MongoDB\Tests\Model\CollectionInfoTest;
+use App\Common\BaseController;
+use App\Models\Pool\Mysql\User;
 
 /**
  * Class Index
  * @package App\HttpController
  */
-class Index extends Controller
+class Index extends BaseController
 {
     /**
      * 首页方法
@@ -19,16 +17,14 @@ class Index extends Controller
      */
     function index()
     {
-        $this->orm();
-        $this->response()->withHeader('Content-type', 'text/html;charset=utf-8');
-        $this->response()->write('<div style="text-align: center"><a href="https://www.easyswoole.com/Manual/2.x/Cn/_book/Base/http_controller.html">查看手册了解详细使用方法</a></div></br>');
+
     }
 
     public function orm()
     {
-        $con = new \MongoDB\Driver\Manager("mongodb://localhost:27017");
 
-
-
+        $model = new User();
+        $data = $model->find(1);
+        var_dump($data);
     }
 }

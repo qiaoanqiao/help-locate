@@ -9,11 +9,15 @@
 namespace EasySwoole\EasySwoole;
 
 
+use App\Lib\Pool\MysqlPool;
 use App\Process\HotReload;
+use EasySwoole\Component\Pool\PoolManager;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
 use EasySwoole\Http\Request;
 use EasySwoole\Http\Response;
+use EasySwoole\EasySwoole\Config as GConfig;
+use EasySwoole\Mysqli\Config;
 
 class EasySwooleEvent implements Event
 {
@@ -24,12 +28,12 @@ class EasySwooleEvent implements Event
      */
     public static function initialize()
     {
-        ini_set("yaconf.directory", EASYSWOOLE_ROOT . '/App/ini');
         date_default_timezone_set('Asia/Shanghai');
     }
 
     public static function mainServerCreate(EventRegister $register)
     {
+        PoolManager::getInstance()->register(MysqlPool::class);
         $instance = \EasySwoole\EasySwoole\Config::getInstance();
         //自动重载
         $autoReloadBool = $instance->getConf('AUTO_RELOAD');

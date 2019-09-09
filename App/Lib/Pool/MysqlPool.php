@@ -2,6 +2,7 @@
 namespace App\Lib\Pool;
 
 use EasySwoole\Component\Pool\AbstractPool;
+use EasySwoole\EasySwoole\Config;
 
 class MysqlPool extends AbstractPool
 {
@@ -11,8 +12,7 @@ class MysqlPool extends AbstractPool
      */
     protected function createObject()
     {
-        //$conf = Config::getInstance()->getConf("MYSQL");
-        $conf = \Yaconf::get("mysql");
+        $conf = Config::getInstance()->getConf("MYSQL");
         $dbConf = new \EasySwoole\Mysqli\Config($conf);
         return new MysqlObject($dbConf);
     }

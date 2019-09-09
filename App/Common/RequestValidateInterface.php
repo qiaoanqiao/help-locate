@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\RequestValidate;
+namespace App\Common;
 
 
 interface RequestValidateInterface

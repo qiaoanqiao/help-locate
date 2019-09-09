@@ -3,9 +3,9 @@ namespace App\Common;
 
 trait JsonResponseTrait
 {
-    function success200($message = '请求成功!', $data = [], $code = 200)
+    public function success200($message = '请求成功!', $data = [], $code = 200)
     {
-        return $this->json(['status'  => $code,
+        return $this->writeJson(['status'  => $code,
             'message' => $message,
             'data'    => $data,
         ]);
@@ -13,7 +13,7 @@ trait JsonResponseTrait
 
     public function error404($message = '页面或接口不存在!', $data = [], $code = 200)
     {
-        return $this->json(['status'  => $code,
+        return $this->writeJson(['status'  => $code,
             'message' => $message,
             'data'    => $data,
         ]);
@@ -23,9 +23,9 @@ trait JsonResponseTrait
      * 用于抛出500系统错误
      *
      */
-    function error500($message = '系统出现异常!',  $data = [], $code = 500)
+    public function error500($message = '系统出现异常!',  $data = [], $code = 500)
     {
-        return $this->json(['status'  => $code,
+        return $this->writeJson(['status'  => $code,
             'message' => $message,
             'data'    => $data,
         ]);
@@ -36,9 +36,9 @@ trait JsonResponseTrait
      *
      * @param  null  $message
      */
-    function error403($message = '没有权限!', $data = [], $code = 403)
+    public function error403($message = '没有权限!', $data = [], $code = 403)
     {
-        return $this->json([
+        return $this->writeJson([
             'status'  => $code,
             'message' => $message,
             'data'    => $data,
@@ -50,9 +50,9 @@ trait JsonResponseTrait
      *
      * @param  null  $message
      */
-    function error522($message = '请检查表单项', $errors = [], $code = 522)
+    public function error522($message = '请检查表单项', $errors = [], $code = 522)
     {
-        return $this->json([
+        return $this->writeJson([
             'status'  => $code,
             'message' => $message,
             'data'    => $errors,
@@ -64,9 +64,9 @@ trait JsonResponseTrait
      *
      * @param  null  $message
      */
-    function error503($message = '请检查请求信息是否符合要求!', $data = [], $code = 503)
+    public function error503($message = '请检查请求信息是否符合要求!', $data = [], $code = 503)
     {
-        return $this->json(['status'  => $code,
+        return $this->writeJson(['status'  => $code,
             'message' => $message,
             'data'    => $data,
         ]);
@@ -77,9 +77,9 @@ trait JsonResponseTrait
      *
      * @param  null  $message
      */
-    function error401($message = ' 您没有权限进行此次操作!', $data = [], $code = 401)
+    public function error401($message = ' 您没有权限进行此次操作!', $data = [], $code = 401)
     {
-        return $this->json([
+        return $this->writeJson([
             'status'  => $code,
             'message' => $message,
             'data'    => [],

@@ -5,6 +5,8 @@ namespace App\HttpController;
 use App\Common\BaseController;
 use App\Models\Pool\Mysql\User;
 use App\RequestValidate\UserLoginRequest;
+use App\RequestValidate\UserRegisterRequest;
+use EasySwoole\EasySwoole\Config;
 use EasySwoole\Validate\Validate;
 
 /**
@@ -13,13 +15,19 @@ use EasySwoole\Validate\Validate;
  */
 class UserAuth extends BaseController
 {
-    /**
-     * 首页方法
-     * @author : evalor <master@evalor.cn>
-     */
-    function index()
+    public function index()
     {
-        var_dump(1);
+        var_dump(isDebug());
+    }
+
+    public function isDebug()
+    {
+        return 1;
+    }
+
+    public function register()
+    {
+
     }
 
     public function orm()
@@ -34,10 +42,14 @@ class UserAuth extends BaseController
     {
         $v = new Validate();
         switch ($action) {
-            case 'ts':
+            case 'login':
                 {
                     $validate = (new UserLoginRequest($v))->getValObj();
                     break;
+                }
+            case 'register':
+                {
+                    $validate = (new UserRegisterRequest($v))->getValObj();
                 }
             default:
                 {

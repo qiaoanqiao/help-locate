@@ -15,7 +15,7 @@ class Index extends BaseController
      * 首页方法
      * @author : evalor <master@evalor.cn>
      */
-    function index()
+    public function index()
     {
 
     }

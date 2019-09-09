@@ -11,13 +11,14 @@ namespace EasySwoole\EasySwoole;
 
 use App\Lib\Pool\MysqlPool;
 use App\Process\HotReload;
+use Dotenv\Dotenv;
 use EasySwoole\Component\Pool\PoolManager;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
 use EasySwoole\Http\Request;
 use EasySwoole\Http\Response;
 use EasySwoole\EasySwoole\Config as GConfig;
-use EasySwoole\Mysqli\Config;
+use App\Lib\Pool\RedisPool;
 
 class EasySwooleEvent implements Event
 {
@@ -29,11 +30,14 @@ class EasySwooleEvent implements Event
     public static function initialize()
     {
         date_default_timezone_set('Asia/Shanghai');
+        self::loadConfigs();
     }
 
     public static function mainServerCreate(EventRegister $register)
     {
         PoolManager::getInstance()->register(MysqlPool::class);
+        PoolManager::getInstance()->register(RedisPool::class);
+
         $instance = \EasySwoole\EasySwoole\Config::getInstance();
         //自动重载
         $autoReloadBool = $instance->getConf('AUTO_RELOAD');
@@ -54,4 +58,30 @@ class EasySwooleEvent implements Event
     {
         // TODO: Implement afterAction() method.
     }
+
+    /**
+     * 加载配置文件
+     * @param $dir
+     */
+    public static function loadConfigs()
+    {
+
+        $config = GConfig::getInstance();
+        $dir = $config->getConf('CONFIGS_DIR');
+        //加载 env 文件
+        $dotenv = Dotenv::create(RUNNING_ROOT, '.env');
+        $dotenv->load();
+
+        $configs = [];
+        foreach( glob( "{$dir}/*.php" ) as $filename ) {
+            $configs = array_merge($configs, require ($filename));
+        }
+
+        if(!empty($configs)) {
+            $config->merge($configs);
+        }
+
+        unset($configs, $dir, $dotenv);
+    }
+
 }

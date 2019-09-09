@@ -11,6 +11,8 @@ class BaseController extends Controller
 {
     use JsonResponseTrait;
 
+    public $requestParams = null;
+
     public function index()
     {
         // TODO: Implement index() method.
@@ -38,6 +40,33 @@ class BaseController extends Controller
     {
 
         return null;
+    }
+
+    protected function allRequestParams()
+    {
+        if($this->requestParams === null) {
+            $this->requestParams = $this->request()->getRequestParam();
+        }
+
+        return $this->requestParams;
+    }
+
+    /**
+     * 获取请求参数
+     *
+     * @param $key
+     * @return mixed|null
+     */
+    public function requestParam($key = null)
+    {
+        if($this->requestParams === null) {
+            $this->requestParams = $this->request()->getRequestParam();
+        }
+        if($key === null) {
+            return $this->allRequestParams();
+        }
+
+        return $this->requestParams[$key] ?? null;
     }
 
 

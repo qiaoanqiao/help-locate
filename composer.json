@@ -20,7 +20,10 @@
         "ext-mongodb": "*",
         "easyswoole/mysqli": "^1.2",
         "easyswoole/mysqli-pool": "^1.0",
-        "robmorgan/phinx": "^0.11.1"
+        "robmorgan/phinx": "^0.11.1",
+        "easyswoole/verifycode": "3.x",
+        "ext-redis": "*",
+        "vlucas/phpdotenv": "^3.5"
     },
     "require-dev": {
         "composer/composer": "^1.6"
@@ -31,14 +34,6 @@
         },
         "files": [
             "App/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "App\\": "App/"
-        },
-        "files": [
-            "App/helpersDev.php"
         ]
     },
     "scripts": {

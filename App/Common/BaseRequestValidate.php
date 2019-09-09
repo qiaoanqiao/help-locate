@@ -1,10 +1,9 @@
 <?php
 
 
-namespace App\RequestValidate;
+namespace App\Common;
 
 
-use EasySwoole\Http\Request;
 use EasySwoole\Validate\Validate;
 
 class BaseRequestValidate implements RequestValidateInterface

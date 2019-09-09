@@ -3,22 +3,24 @@ namespace App\Lib\Redis;
 ini_set('default_socket_timeout', -1);
 //use EasySwoole\Core\AbstractInterface\Singleton;
 use EasySwoole\Component\Singleton;
-use EasySwoole\Config;
 class Redis {
 	
 	use Singleton;
 
 	public $redis = "";
 
-	private function __construct() {
+    /**
+     * Redis constructor.
+     * @throws \Exception
+     */
+    private function __construct() {
 		ini_set('default_socket_time', -1);
 		if(!extension_loaded('redis')) {
 			throw new \Exception("redis.so文件不存在");
 		}
 		try {
-			//$redisConfig = Config::getInstance()->getConf("redis");
+			$redisConfig = \EasySwoole\EasySwoole\Config::getInstance()->getConf("REDIS");
 			
-			$redisConfig = \Yaconf::get('redis');
 			$this->redis = new \Redis();
 			$result = $this->redis->connect($redisConfig['host'], $redisConfig['port'], $redisConfig['time_out']);
 		} catch(\Exception $e) {

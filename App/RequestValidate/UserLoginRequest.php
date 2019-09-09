@@ -4,6 +4,8 @@
 namespace App\RequestValidate;
 
 
+use App\Common\BaseRequestValidate;
+
 class UserLoginRequest extends BaseRequestValidate
 {
     /**

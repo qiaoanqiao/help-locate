@@ -9,10 +9,13 @@
 namespace EasySwoole\EasySwoole;
 
 
+use App\Crontab\CurrentLimiter;
+use App\Lib\IpList;
 use App\Lib\Pool\MysqlPool;
 use App\Process\HotReload;
 use Dotenv\Dotenv;
 use EasySwoole\Component\Pool\PoolManager;
+use EasySwoole\EasySwoole\Crontab\Crontab;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
 use EasySwoole\Http\Request;
@@ -45,12 +48,11 @@ class EasySwooleEvent implements Event
             $swooleServer = ServerManager::getInstance()->getSwooleServer();
             $swooleServer->addProcess((new HotReload('HotReload', ['disableInotify' => false]))->getProcess());
         }
-
+        self::ipList();
     }
 
     public static function onRequest(Request $request, Response $response): bool
     {
-        // TODO: Implement onRequest() method.
         return true;
     }
 
@@ -82,6 +84,13 @@ class EasySwooleEvent implements Event
         }
 
         unset($configs, $dir, $dotenv);
+    }
+
+    public static function ipList()
+    {
+        // 开启IP限流
+        IpList::getInstance();
+        Crontab::getInstance()->addTask(CurrentLimiter::class);
     }
 
 }

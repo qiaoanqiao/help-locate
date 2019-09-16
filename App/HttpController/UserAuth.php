@@ -17,17 +17,23 @@ class UserAuth extends BaseController
 {
     public function index()
     {
-        var_dump(isDebug());
+        return $this->success200();
     }
 
-    public function isDebug()
+    public function register(User $user)
     {
-        return 1;
-    }
+        $validation_scenarios = $this->requestParam('validation_scenarios');
+        $captcha_image_key = $this->requestParam('captcha_sms_key');
+        $captcha_code = $this->requestParam('captcha_sms_code');
+        $mobile = $this->requestParam('mobile');
 
-    public function register()
-    {
+        $validation = new Validation();
+        if($valMessage = $validation->verifyMobileVerificationCode($validation_scenarios, $captcha_image_key, $captcha_code, $mobile) !== true) {
+            return $this->error522($valMessage);
+        }
 
+
+        return $this->success200();
     }
 
     public function orm()

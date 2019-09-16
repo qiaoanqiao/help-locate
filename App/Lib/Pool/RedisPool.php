@@ -2,10 +2,12 @@
 namespace App\Lib\Pool;
 
 use EasySwoole\Component\Pool\AbstractPool;
+use EasySwoole\Component\Pool\PoolObjectInterface;
 use EasySwoole\EasySwoole\Config;
 
 class RedisPool extends AbstractPool
 {
+
     protected function createObject()
     {
         if (!extension_loaded('redis')) {

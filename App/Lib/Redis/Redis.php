@@ -22,6 +22,7 @@ class Redis {
 			$redisConfig = \EasySwoole\EasySwoole\Config::getInstance()->getConf("REDIS");
 			
 			$this->redis = new \Redis();
+
 			$result = $this->redis->connect($redisConfig['host'], $redisConfig['port'], $redisConfig['time_out']);
 		} catch(\Exception $e) {
 			throw new \Exception("redis服务异常");

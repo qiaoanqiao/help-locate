@@ -2,10 +2,11 @@
 /**
  * Generate a more truly "random" alpha-numeric string.
  *
- * @param  int  $length
+ * @param int $length
  * @return string
+ * @throws Exception
  */
-function random($length = 16)
+function str_random($length = 16)
 {
     $string = '';
 
@@ -21,56 +22,31 @@ function random($length = 16)
 }
 
 /**
+ * 获取 redis 进程池
  * @return \Swoole\Coroutine\Redis
- * @throws \EasySwoole\Component\Pool\Exception\PoolEmpty
- * @throws \EasySwoole\Component\Pool\Exception\PoolException
  */
-function redisPool()
+function redis_pool()
 {
-    $redis = \App\Lib\Pool\RedisPool::defer();
+    try {
+        $redis = \App\Lib\Pool\RedisPool::defer();
+    } catch (\Exception $e) {
+        $redis = \App\Lib\Redis\Redis::getInstance();
+    }
 
     return $redis;
 }
-//
-//if (! function_exists('value')) {
-//
-//    /**
-//     * Gets the value of an environment variable.
-//     *
-//     * @param string $key
-//     * @param mixed $default
-//     * @return mixed
-//     */
-//    function env($key, $default = null)
-//    {
-//        $value = getenv($key);
-//
-//        if ($value === false) {
-//            return value($default);
-//        }
-//
-//        switch (strtolower($value)) {
-//            case 'true':
-//            case '(true)':
-//                return true;
-//            case 'false':
-//            case '(false)':
-//                return false;
-//            case 'empty':
-//            case '(empty)':
-//                return '';
-//            case 'null':
-//            case '(null)':
-//                return;
-//        }
-//
-//        if (($valueLength = strlen($value)) > 1 && $value[0] === '"' && $value[$valueLength - 1] === '"') {
-//            return substr($value, 1, -1);
-//        }
-//
-//        return $value;
-//    }
-//}
+
+/**
+ * 字符串精准要求高的验证场景的对比
+ *
+ * @param $string
+ * @param $lastString
+ * @return bool
+ */
+function string_coomp($string, $lastString) : bool
+{
+    return hash_equals($string, $lastString);
+}
 
 /**
  * Return the default value of the given value.
@@ -87,3 +63,4 @@ function isDebug()
 {
     return \EasySwoole\EasySwoole\Config::getInstance()->getConf('debug');
 }
+

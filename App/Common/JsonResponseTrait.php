@@ -68,4 +68,5 @@ trait JsonResponseTrait
     {
         return $this->writeJson($code, $data, $message);
     }
+
 }

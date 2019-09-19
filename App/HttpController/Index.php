@@ -17,14 +17,7 @@ class Index extends BaseController
      */
     public function index()
     {
-
+        return $this->success200();
     }
 
-    public function orm()
-    {
-
-        $model = new User();
-        $data = $model->find(1);
-        var_dump($data);
-    }
 }

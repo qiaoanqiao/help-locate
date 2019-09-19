@@ -75,4 +75,28 @@ class Base
         return $data;
     }
 
+    /**
+     * @param null $column
+     * @return mixed
+     * @throws ConnectFail
+     * @throws PrepareQueryFail
+     * @throws \Throwable
+     */
+    public function count($column = null)
+    {
+        return $this->db->count($this->tableName, $column);
+    }
+
+    /**
+     * @param $data
+     * @return bool|int
+     * @throws ConnectFail
+     * @throws PrepareQueryFail
+     * @throws \Throwable
+     */
+    public function insert($data)
+    {
+        return $this->db->insert($this->tableName, $data);
+    }
+
 }

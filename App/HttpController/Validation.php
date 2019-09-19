@@ -117,6 +117,7 @@ class Validation extends BaseController
         //设置限制频率逻辑验证
         $this->setIpThrottling($validation_scenarios, $authType, $ttl);
 
+
         if (isDebug()) {
             return $this->success200('获取短信验证码成功!', ['captcha_sms_key' => $valKey, 'captcha_sms_code' => $valCode]);
         } else {
@@ -207,11 +208,13 @@ class Validation extends BaseController
             case 'register':
                 {
                     $validate = (new UserRegisterRequest($v))->getValObj();
+                    break;
                 }
             case 'getGraphicsBase64':
                 {
                     $v->addColumn('validation_scenarios', '验证场景')->required('不能为空!');
                     $validate = $v;
+                    break;
                 }
             case 'sendSmsCode':
                 {
@@ -219,6 +222,7 @@ class Validation extends BaseController
                     $v->addColumn('captcha_image_key', '图形验证码 Key')->required('不能为空!');
                     $v->addColumn('captcha_image_code', '图形验证码')->required('不能为空!');
                     $validate = $v;
+                    break;
                 }
             default:
                 {
@@ -298,6 +302,17 @@ class Validation extends BaseController
         $data = $this->getCachePool()->get($key);
 
         return $data ?: '';
+    }
+
+    public function closeCache()
+    {
+        if(!empty($this->redisPool)){
+            if($this->redisPool instanceof \App\Lib\Redis\Redis) {
+                $this->redisPool->close();
+            } else {
+                PoolManager::getInstance()->getPool(RedisPool::class)->recycleObj($this->redisPool);
+            }
+        }
     }
 
 }

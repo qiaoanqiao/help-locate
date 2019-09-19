@@ -33,9 +33,9 @@ class EquipmentRecordMigration extends AbstractMigration
     {
         $table = $this->table('equipment_record');
         $table->addColumn('device_name', 'integer')
-            ->addColumn('imei', 'string',  ['limit' => 30]) //android 标识
-            ->addColumn('idfa', 'string',  ['limit' => 30]) //ios 标识
-            ->addColumn('created', 'datetime') //设备创建时间
+            ->addColumn('imei', 'string',  ['limit' => 30, 'default' => '']) //android 标识
+            ->addColumn('idfa', 'string',  ['limit' => 30, 'default' => '']) //ios 标识
+            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']) //设备创建时间
             ->create();
     }
 }

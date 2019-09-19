@@ -38,15 +38,34 @@ class EasySwooleEvent implements Event
 
     public static function mainServerCreate(EventRegister $register)
     {
-        PoolManager::getInstance()->register(MysqlPool::class);
-        PoolManager::getInstance()->register(RedisPool::class);
+        $config = \EasySwoole\EasySwoole\Config::getInstance();
 
-        $instance = \EasySwoole\EasySwoole\Config::getInstance();
-        //自动重载
-        $autoReloadBool = $instance->getConf('AUTO_RELOAD');
-        if($autoReloadBool === true) {
-            $swooleServer = ServerManager::getInstance()->getSwooleServer();
-            $swooleServer->addProcess((new HotReload('HotReload', ['disableInotify' => false]))->getProcess());
+        $mysqlPoolConf = PoolManager::getInstance()->register(MysqlPool::class);
+        $mysqlConf = $config->getConf('mysql_pool');
+        $mysqlPoolConf->setExtraConf($mysqlConf['extraConf'])
+            ->setGetObjectTimeout($mysqlConf['getObjectTimeout'])
+            ->setIntervalCheckTime($mysqlConf['intervalCheck'])
+            ->setMaxIdleTime($mysqlConf['maxIdleTime'])
+            ->setMaxObjectNum($mysqlConf['maxObjectNum'])
+            ->setMinObjectNum($mysqlConf['minObjectNum']);
+
+        $redisPoolConf = PoolManager::getInstance()->register(RedisPool::class);
+        $redisConf = $config->getConf('redis_pool');
+
+        $redisPoolConf->setExtraConf($redisConf['extraConf'])
+            ->setGetObjectTimeout($redisConf['getObjectTimeout'])
+            ->setIntervalCheckTime($redisConf['intervalCheck'])
+            ->setMaxIdleTime($redisConf['maxIdleTime'])
+            ->setMaxObjectNum($redisConf['maxObjectNum'])
+            ->setMinObjectNum($redisConf['minObjectNum']);
+
+        //代码修改自动重载
+        if(isDebug()) {
+            $autoReloadBool = $config->getConf('AUTO_RELOAD');
+            if($autoReloadBool === true) {
+                $swooleServer = ServerManager::getInstance()->getSwooleServer();
+                $swooleServer->addProcess((new HotReload('HotReload', ['disableInotify' => false]))->getProcess());
+            }
         }
         self::ipList();
     }
@@ -58,7 +77,9 @@ class EasySwooleEvent implements Event
 
     public static function afterRequest(Request $request, Response $response): void
     {
-        // TODO: Implement afterAction() method.
+        $redis = \App\Lib\Redis\Redis::getInstance();
+        $redis->close();
+        unset($redis);
     }
 
     /**

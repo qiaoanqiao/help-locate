@@ -27,27 +27,8 @@ class BaseController extends Controller
         parent::__construct();
 
         $this->validationKeyConf = Config::getInstance()->getConf('validation_scenarios');
-        if($this->redisPool === null) {
-            try {
-                $redis = PoolManager::getInstance()->getPool(RedisPool::class)->getObj();
-            } catch (\Exception $e) {
-                $redis = \App\Lib\Redis\Redis::getInstance();
-            }
-            $this->redisPool = $redis;
-        }
     }
 
-    public function __destruct()
-    {
-        if($this->redisPool !== null) {
-            //关闭 redis 连接
-            if($this->redisPool instanceof \App\Lib\Redis\Redis) {
-                $this->redisPool->close;
-            } else {
-                PoolManager::getInstance()->getPool(RedisPool::class)->recycleObj($this->redisPool);
-            }
-        }
-    }
 
     public function index()
     {
@@ -65,7 +46,7 @@ class BaseController extends Controller
             $ret = $this->validate($v);
 
             if($ret == false){
-                $this->writeJson(Status::CODE_BAD_REQUEST,null,"{$v->getError()->getField()}@{$v->getError()->getFieldAlias()}:{$v->getError()->getErrorRuleMsg()}");
+                $this->error522("{$v->getError()->getField()}@{$v->getError()->getFieldAlias()}:{$v->getError()->getErrorRuleMsg()}",[$v->getError()->getField() => "{$v->getError()->getFieldAlias()}:{$v->getError()->getErrorRuleMsg()}"]);
                 return false;
             }
         }
@@ -107,15 +88,7 @@ class BaseController extends Controller
 
     public function getCachePool()
     {
-        if($this->redisPool === null) {
-            try {
-                $redis = PoolManager::getInstance()->getPool(RedisPool::class)->getObj();
-            } catch (\Exception $e) {
-                $redis = \App\Lib\Redis\Redis::getInstance();
-            }
-            $this->redisPool = $redis;
-        }
-        return $this->redisPool;
+        return \App\Lib\Redis\Redis::getInstance();
     }
 
 

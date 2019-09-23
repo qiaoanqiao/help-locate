@@ -8,7 +8,6 @@ use EasySwoole\Validate\Validate;
 
 class BaseRequestValidate implements RequestValidateInterface
 {
-    protected $valObj;
     public $validate;
 
     /**

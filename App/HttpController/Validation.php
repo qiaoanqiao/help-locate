@@ -59,7 +59,7 @@ class Validation extends BaseController
         $code = new \EasySwoole\VerifyCode\VerifyCode($config);
         $generateVerificationCode = $code->DrawCode();
         $valCode = $generateVerificationCode->getImageCode();
-        $valKey = $this->randomScenariosKey();
+        $valKey = randomScenariosKey(12);
         $cacheKey = $this->assemblyCacheKey($valKey, $this->requestParam('validation_scenarios'), $this->graphicsKey);
 
         $this->setValCodeCache($cacheKey, $valCode, $this->getValidationKeyConf()[$this->requestParam('validation_scenarios')][$this->graphicsKey]['ttl']);
@@ -91,6 +91,7 @@ class Validation extends BaseController
         $mobile = $this->requestParam('mobile');
         $authType = $this->smsKey;
 
+
         //验证场景是否存在
         if (!empty($this->validationScenarios($this->requestParam('validation_scenarios')))) {
             return true;
@@ -108,7 +109,7 @@ class Validation extends BaseController
             }
         }
 
-        $valKey = $this->randomScenariosKey();
+        $valKey = randomScenariosKey(12);
         $cacheKey = $this->assemblyCacheKey($valKey, $validation_scenarios, $authType);
         $valCode = \EasySwoole\Utility\Random::number(5);
 
@@ -116,7 +117,6 @@ class Validation extends BaseController
         $this->setValCodeCache($cacheKey, $valCode . ',' . $mobile, $ttl);
         //设置限制频率逻辑验证
         $this->setIpThrottling($validation_scenarios, $authType, $ttl);
-
 
         if (isDebug()) {
             return $this->success200('获取短信验证码成功!', ['captcha_sms_key' => $valKey, 'captcha_sms_code' => $valCode]);
@@ -132,6 +132,9 @@ class Validation extends BaseController
      */
     public function verifyMobileVerificationCode($validation_scenarios, $captcha_image_key, $captcha_code, $mobile)
     {
+        if(isDebug()) {
+            return true;
+        }
         $authType = $this->smsKey;
 
         $cacheKey = $this->assemblyCacheKey($captcha_image_key, $validation_scenarios, $authType);
@@ -258,7 +261,11 @@ class Validation extends BaseController
     {
         $cacheKey = $this->assemblyCacheKey($captcha_image_key, $validation_scenarios, $this->graphicsKey);
 
+        if(isDebug()) {
+            return true;
+        }
         return string_coomp(strtolower($this->getValCodeCache($cacheKey)), strtolower($code));
+
     }
 
     /**
@@ -269,6 +276,7 @@ class Validation extends BaseController
      */
     public function validationScenarios($scenarios)
     {
+//        var_dump($scenarios, $this->getValidationKeyConf());
         if (!isset($this->getValidationKeyConf()[$scenarios])) {
             return $this->error522('没有此验证场景!');
         }
@@ -297,6 +305,10 @@ class Validation extends BaseController
         $this->getCachePool()->set($key, $code, $ttl);
     }
 
+    /**
+     * @param string $key
+     * @return string
+     */
     public function getValCodeCache(string $key = '')
     {
         $data = $this->getCachePool()->get($key);

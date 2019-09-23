@@ -29,7 +29,6 @@ class Redis
     {
         ini_set('default_socket_time', -1);
         $this->initRedis();
-        $this->round = mt_rand(111, 20000);
     }
 
     public function close()

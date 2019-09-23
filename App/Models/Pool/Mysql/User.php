@@ -64,6 +64,11 @@ class User extends Base
         return $this->db->where('mobile', $mobile)->has($this->tableName);
     }
 
+    public function login($mobile)
+    {
+        return $this->db->where('mobile', $mobile)->getOne($this->tableName);
+    }
+
     public function __call($name, $arguments)
     {
         return $this->db->$name(...$arguments);

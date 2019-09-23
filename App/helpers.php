@@ -64,3 +64,16 @@ function isDebug()
     return \EasySwoole\EasySwoole\Config::getInstance()->getConf('debug');
 }
 
+
+/**
+ * 随机生成不同验证类型和场景的缓存 Key
+ *
+ * @param string $scenario
+ * @param string $autype
+ * @return string
+ */
+function randomScenariosKey($length = 12)
+{
+    return \EasySwoole\Utility\Random::character($length);
+}
+

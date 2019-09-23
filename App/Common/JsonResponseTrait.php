@@ -30,11 +30,11 @@ trait JsonResponseTrait
     }
 
     /**
-     * 用于抛出401 用户权限 错误
+     * 用于抛出403 拒绝访问(没有权限)错误
      *
      * @param  null  $message
      */
-    public function error403($message = '没有权限!', $data = [], $code = 403)
+    public function error403($message = '拒绝访问!没有权限!', $data = [], $code = 403)
     {
         return $this->writeJson($code, $data, $message);
     }
@@ -60,11 +60,11 @@ trait JsonResponseTrait
     }
 
     /**
-     * 用于抛出401 用户权限 错误
+     * 用于抛出401 未授权(未登录) 错误
      *
      * @param  null  $message
      */
-    public function error401($message = ' 您没有权限进行此次操作!', $data = [], $code = 401)
+    public function error401($message = '您没有进行登录!', $data = [], $code = 401)
     {
         return $this->writeJson($code, $data, $message);
     }

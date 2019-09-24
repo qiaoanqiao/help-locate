@@ -5,6 +5,7 @@ namespace App\HttpController;
 use App\Common\BaseController;
 use App\Lib\AuthToken;
 use App\Models\Pool\Mysql\User;
+use App\ModelTransform\UserTransform;
 use App\RequestValidate\UserLoginRequest;
 use App\RequestValidate\UserRegisterRequest;
 use EasySwoole\EasySwoole\Config;
@@ -87,7 +88,7 @@ class UserAuth extends BaseController
         $token = $authToken->generateToken($client, $userData);
 
         return $this->success200('登录成功!', [
-            'user' => $userData,
+            'user' => (new UserTransform())->personalCenter($userData),
             'token' => $token,
         ]);
 
@@ -126,7 +127,7 @@ class UserAuth extends BaseController
      * @param $string
      * @return bool|string
      */
-    public function encryption($string)
+    private function encryption($string)
     {
         return password_hash($string, PASSWORD_BCRYPT);
     }
@@ -136,7 +137,7 @@ class UserAuth extends BaseController
      * @param $hashedValue
      * @return bool
      */
-    public function verifyPassword($value, $hashedValue)
+    private function verifyPassword($value, $hashedValue)
     {
         if (strlen($hashedValue) === 0) {
             return false;

@@ -14,9 +14,9 @@ use EasySwoole\EasySwoole\Config;
  * Trait UserAuth
  * @package App\Common
  */
-trait UserAuth
+trait UserAuthTrait
 {
-    public $user;
+    public $user = [];
 
     /**
      * @return mixed
@@ -24,22 +24,35 @@ trait UserAuth
      */
     public function leadMiddleware()
     {
-        if(empty($token = ($this->request()->getHeader('token'))[0] ?? '')) {
-            return $this->error401('当前接口需要登录!', ['token' => '没有客户凭证!']);
-        };
         if(empty($client = ($this->request()->getHeader('client'))[0] ?? '')) {
             return $this->error522('未知客户端请求!', ['client' => '客户端不正确!!']);
         };
-        $tokenClientConf = Config::getInstance()->getConf('token_client');
-        if(!isset($tokenClientConf[$client])) {
-            return $this->error403('不存在的客户端!', ['client' => '客户端不正确!!']);
-        }
         $authToken =  new AuthToken();
+        if(isDebug()) {
+            $userData = (new User())->login(config('debug_mobile'));
+            $token = $authToken->generateToken($client, $userData);
+        } else{
+            if(empty($token = ($this->request()->getHeader('user_token'))[0] ?? '')) {
+                return $this->error401('当前接口需要登录!', ['token' => '没有客户凭证!']);
+            };
+
+            $tokenClientConf = Config::getInstance()->getConf('token_client');
+            if(!isset($tokenClientConf[$client])) {
+                return $this->error403('不存在的客户端!', ['client' => '客户端不正确!!']);
+            }
+        }
+
         if(is_string($data = $authToken->getTokenAsData($client, $token))) {
             return $this->error401($data);
         }
-
         $this->user = $data;
+
+        return true;
+    }
+
+    public function setUserData()
+    {
+
     }
 
     /**
@@ -55,11 +68,25 @@ trait UserAuth
      */
     public function user()
     {
-        return (new User())->find($this->user['id']);
+        $user = (new User())->find($this->user['id']);
+
+        return $user;
     }
 
     public function id()
     {
         return $this->user['id'] ?? 0;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        if(empty($this->user)) {
+            $this->leadMiddleware();
+        }
+
+        return $this->user;
     }
 }

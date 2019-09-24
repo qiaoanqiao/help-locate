@@ -59,9 +59,9 @@ function value($value)
     return $value instanceof Closure ? $value() : $value;
 }
 
-function isDebug()
+function isDebug() :bool
 {
-    return \EasySwoole\EasySwoole\Config::getInstance()->getConf('debug');
+    return \EasySwoole\EasySwoole\Config::getInstance()->getConf('debug') ? true : false;
 }
 
 
@@ -76,4 +76,15 @@ function randomScenariosKey($length = 12)
 {
     return \EasySwoole\Utility\Random::character($length);
 }
+
+function config($key)
+{
+    return \EasySwoole\EasySwoole\Config::getInstance()->getConf($key);
+}
+
+function ec($data)
+{
+    var_dump($data);
+}
+
 

@@ -20,6 +20,7 @@ return [
             'ttl' =>  86400,
             'length' => 30,
         ],
-    ]
+    ],
+    'debug_mobile' => env('DEBUG_MOBILE', 1888888888)
 
 ];

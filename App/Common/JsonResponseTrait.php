@@ -12,12 +12,14 @@ trait JsonResponseTrait
      */
     public function success200($message = '请求成功!', $data = [], $code = 200)
     {
-        return $this->writeJson($code, $data, $message);
+         $this->writeJson($code, $data, $message);
+         return true;
     }
 
     public function error404($message = '页面或接口不存在!', $data = [], $code = 200)
     {
-        return $this->writeJson($code, $data, $message);
+        $this->writeJson($code, $data, $message);
+        return false;
     }
 
     /**
@@ -26,7 +28,8 @@ trait JsonResponseTrait
      */
     public function error500($message = '系统出现异常!',  $data = [], $code = 500)
     {
-        return $this->writeJson($code, $data, $message);
+        $this->writeJson($code, $data, $message);
+        return false;
     }
 
     /**
@@ -36,7 +39,8 @@ trait JsonResponseTrait
      */
     public function error403($message = '拒绝访问!没有权限!', $data = [], $code = 403)
     {
-        return $this->writeJson($code, $data, $message);
+        $this->writeJson($code, $data, $message);
+        return false;
     }
 
     /**
@@ -46,7 +50,8 @@ trait JsonResponseTrait
      */
     public function error522($message = '请检查表单项', $errors = [], $code = 522)
     {
-        return $this->writeJson($code, $errors, $message);
+        $this->writeJson($code, $errors, $message);
+        return false;
     }
 
     /**
@@ -56,7 +61,8 @@ trait JsonResponseTrait
      */
     public function error503($message = '请检查请求信息是否符合要求!', $data = [], $code = 503)
     {
-        return $this->writeJson($code, $data, $message);
+        $this->writeJson($code, $data, $message);
+        return false;
     }
 
     /**
@@ -66,7 +72,8 @@ trait JsonResponseTrait
      */
     public function error401($message = '您没有进行登录!', $data = [], $code = 401)
     {
-        return $this->writeJson($code, $data, $message);
+        $this->writeJson($code, $data, $message);
+        return false;
     }
 
 }

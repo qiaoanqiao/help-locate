@@ -309,7 +309,7 @@ class Validation extends BaseController
      * @param string $key
      * @return string
      */
-    public function getValCodeCache(string $key = '')
+    public function getValCodeCache(string $key)
     {
         $data = $this->getCachePool()->get($key);
 

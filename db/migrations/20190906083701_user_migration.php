@@ -38,6 +38,7 @@ class UserMigration extends AbstractMigration
             ->addColumn('mobile', 'string',  ['limit' => 30, 'default' => ''])
             ->addColumn('password', 'string',  ['limit' => 125, 'default' => ''])
             ->addColumn('email', 'string',  ['limit' => 40, 'default' => ''])
+            ->addColumn('avatar', 'string',  ['limit' => 125, 'default' => ''])
             ->addColumn('wx_id', 'string',  ['limit' => 100, 'default' => ''])
             ->addColumn('is_vip', 'boolean', ['default' => 0])
             ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])

@@ -49,11 +49,13 @@ class BaseController extends Controller
         }
         $ret =  parent::onRequest($action);
 
+        //中间件方法 todo 路由中间件
         if(method_exists($this, 'leadMiddleware')) {
-            $this->leadMiddleware();
-        }
+            if(($middleWare = $this->leadMiddleware()) !== true) {
 
-        $this->leadMiddleware();
+                return false;
+            }
+        }
         if($ret === false){
             return false;
         }

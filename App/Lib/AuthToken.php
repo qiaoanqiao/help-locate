@@ -10,6 +10,7 @@ use EasySwoole\EasySwoole\Config;
 class AuthToken
 {
     private $prefix = 'token_client_';
+    private $hExistsKey = 'id';
 
     private $clientConf = [
         'default' => [
@@ -53,7 +54,7 @@ class AuthToken
         while (true) {
             $token = $this->randomScenariosKey($conf['length']);
             $cacheKey = $this->assembleTokenCacheKey($client, $token);
-            if(!$redis->hExists($cacheKey, $token)) {
+            if(!$redis->hExists($cacheKey, $this->hExistsKey)) {
                 if($redis->hMSet($cacheKey, $data)) {
                     $redis->expire($cacheKey, $conf['ttl']);
                     break;
@@ -76,18 +77,34 @@ class AuthToken
         $redis = Redis::getInstance();
         $cacheKey = $this->assembleTokenCacheKey($client, $token);
         //token 已存在处理
-        if(!$redis->hExists($cacheKey, $token)) {
+        if(!$redis->hExists($cacheKey, $this->hExistsKey)) {
             return '当前登录无记录或已过期!';
         }
 
         if(empty($data = $redis->hGetAll($cacheKey))) {
             return '当前登录信息记录异常!';
         }
+        //hash 取出数据不是键值对齐处理
+        $dataLength = count($data);
+        $returnData = [];
+        for ($i = 0; $i < $dataLength; $i++) {
+            if($i === 0) {
+                $returnData[$data[0]] = $data[1];
+            }
+            if($i > 1){
+                if(($i % 2) !== 0) {
+                    if(isset($data[($i-1)]) && isset($data[$i])) {
+                        $returnData[$data[($i-1)]] = $data[$i];
+                    }
+                }
+            }
+        }
+
         //更新调用时间
         $conf = $this->getClientConf($client);
         $redis->expire($cacheKey, $conf['ttl']);
 
-        return $data;
+        return $returnData;
     }
 
     public function assembleTokenCacheKey($client, $token)

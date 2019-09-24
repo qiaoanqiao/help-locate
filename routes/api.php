@@ -10,3 +10,4 @@ $router->get('/validate/graphical-verification', '/Validation/getGraphicsBase64'
 $router->post('/validate/send-sms-code', '/Validation/sendSmsCode');
 $router->post('/user/register', '/UserAuth/register');
 $router->post('/user/login', '/UserAuth/login');
+$router->get('/user/personal-center', '/UserInformation/personalCenter');

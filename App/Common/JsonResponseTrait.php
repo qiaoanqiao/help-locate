@@ -76,4 +76,21 @@ trait JsonResponseTrait
         return false;
     }
 
+
+    protected function writeJson($statusCode = 200, $result = null, $msg = null)
+    {
+        if (!$this->response()->isEndResponse()) {
+            $data = Array(
+                "code" => $statusCode,
+                "result" => $result,
+                "msg" => $msg
+            );
+            $this->response()->write(msg_encode($data));
+            $this->response()->withHeader('Content-type', 'application/msgpack');
+            $this->response()->withStatus($statusCode);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

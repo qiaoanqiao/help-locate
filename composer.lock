@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "617ea8e3d407231a4bdbc5b057babc54",
+    "content-hash": "5bc71d51382ebd817a556e8e2f3b2cc4",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -834,6 +834,60 @@
             "time": "2019-08-09T03:44:56+00:00"
         },
         {
+            "name": "easyswoole/socket",
+            "version": "1.1.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easy-swoole/socket.git",
+                "reference": "d6100a3f7c35c256f67cb9b9c539032568c8aa83"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easy-swoole/socket/zipball/d6100a3f7c35c256f67cb9b9c539032568c8aa83",
+                "reference": "d6100a3f7c35c256f67cb9b9c539032568c8aa83",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "easyswoole/spl": "^1.0",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "easyswoole/phpunit": "^1.0",
+                "easyswoole/swoole-ide-helper": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasySwoole\\Socket\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "YF",
+                    "email": "291323003@qq.com"
+                }
+            ],
+            "description": "An efficient swoole framework",
+            "homepage": "https://www.easyswoole.com/",
+            "keywords": [
+                "async",
+                "easyswoole",
+                "framework",
+                "swoole"
+            ],
+            "time": "2019-05-30T02:54:45+00:00"
+        },
+        {
             "name": "easyswoole/spl",
             "version": "1.2.4",
             "source": {
@@ -919,6 +973,50 @@
             ],
             "description": "swoole-ide-helper",
             "time": "2019-07-02T03:19:42+00:00"
+        },
+        {
+            "name": "easyswoole/task",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easy-swoole/task.git",
+                "reference": "6eed25cf6a8bd878c5c101c41bfd28d9a02f7926"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easy-swoole/task/zipball/6eed25cf6a8bd878c5c101c41bfd28d9a02f7926",
+                "reference": "6eed25cf6a8bd878c5c101c41bfd28d9a02f7926",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "easyswoole/component": "^1.6",
+                "easyswoole/spl": "^1.2",
+                "ext-swoole": ">=4.4.0"
+            },
+            "require-dev": {
+                "easyswoole/swoole-ide-helper": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasySwoole\\Task\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A simple Queue implementation integrated into easySwoole",
+            "keywords": [
+                "easyswoole"
+            ],
+            "time": "2019-08-22T08:28:13+00:00"
         },
         {
             "name": "easyswoole/trigger",
@@ -2981,7 +3079,8 @@
         "php": ">=7.1.0",
         "ext-swoole": ">=4.0.3",
         "ext-mongodb": "*",
-        "ext-redis": "*"
+        "ext-redis": "*",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "platform-overrides": {

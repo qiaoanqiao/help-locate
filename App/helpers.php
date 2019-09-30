@@ -87,4 +87,20 @@ function ec($data)
     var_dump($data);
 }
 
+/**
+ * @param string $msg
+ * @return array
+ */
+function msg_decode($msg)
+{
+    return msgpack_unpack($msg);
+}
 
+/**
+ * @param mixed $data
+ * @return string
+ */
+function msg_encode($data)
+{
+    return msgpack_pack($data);
+}

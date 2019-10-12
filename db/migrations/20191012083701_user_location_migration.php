@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class EquipmentRecordMigration extends AbstractMigration
+class UserLocationMigration extends AbstractMigration
 {
     /**
      * Change Method.
@@ -31,11 +31,16 @@ class EquipmentRecordMigration extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('equipment_record');
-        $table->addColumn('device_name', 'integer')
-            ->addColumn('imei', 'string',  ['limit' => 256, 'default' => '']) //android 标识
-            ->addColumn('idfa', 'string',  ['limit' => 30, 'default' => '']) //ios 标识
-            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']) //设备创建时间
+// create the table
+        $table = $this->table('user_location');
+        $table->addColumn('locate_mode', 'string',  ['limit' => 30, 'default' => ''])
+            ->addColumn('latitude', 'string',  ['limit' => 50, 'default' => ''])
+            ->addColumn('longitude', 'string',  ['limit' => 50, 'default' => ''])
+            ->addColumn('accuracy', 'string',  ['limit' => 50, 'default' => ''])
+            ->addColumn('verticalAccuracy', 'string',  ['limit' => 255, 'default' => ''])
+            ->addColumn('type', 'string',  ['limit' => 10, 'default' => 'gcj02'])
+            ->addColumn('speed', 'string',  ['limit' => 10, 'default' => ''])
+            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->create();
     }
 }

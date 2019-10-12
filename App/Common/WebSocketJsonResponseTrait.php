@@ -1,7 +1,7 @@
 <?php
 namespace App\Common;
 
-trait JsonResponseTrait
+trait WebSocketJsonResponseTrait
 {
     /**
      * 请求成功
@@ -79,18 +79,11 @@ trait JsonResponseTrait
 
     protected function writeJson($statusCode = 200, $result = null, $msg = null)
     {
-        if (!$this->response()->isEndResponse()) {
-            $data = Array(
-                "code" => $statusCode,
-                "result" => $result,
-                "msg" => $msg
-            );
-            $this->response()->write(msg_encode($data));
-            $this->response()->withHeader('Content-type', 'application/json;charset=utf-8');
-            $this->response()->withStatus($statusCode);
-            return true;
-        } else {
-            return false;
-        }
+        $data = Array(
+            "code" => $statusCode,
+            "result" => $result,
+            "msg" => $msg
+        );
+        $this->response()->setMessage(json_encode($data));
     }
 }

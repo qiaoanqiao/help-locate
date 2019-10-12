@@ -25,7 +25,8 @@
         "ext-redis": "*",
         "vlucas/phpdotenv": "^3.5",
         "easyswoole/socket": "^1.1",
-        "easyswoole/task": "^1.0"
+        "easyswoole/task": "^1.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "composer/composer": "^1.6"

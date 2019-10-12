@@ -93,7 +93,7 @@ function ec($data)
  */
 function msg_decode($msg)
 {
-    return msgpack_unpack($msg);
+    return json_decode($msg, true);
 }
 
 /**
@@ -102,5 +102,5 @@ function msg_decode($msg)
  */
 function msg_encode($data)
 {
-    return msgpack_pack($data);
+    return json_encode($data);
 }

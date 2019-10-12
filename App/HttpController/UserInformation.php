@@ -24,7 +24,11 @@ class UserInformation extends BaseController
     public function personalCenter()
     {
         $userData = $this->user();
+        if(isDebug()) {
+            return $this->success200('获取成功!', array_merge((new UserTransform())->personalCenter($userData), ['token' => $this->token]));
+        }
         return $this->success200('获取成功!', (new UserTransform())->personalCenter($userData));
+
     }
 
 

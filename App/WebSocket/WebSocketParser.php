@@ -26,8 +26,9 @@ class WebSocketParser implements ParserInterface
      */
     public function decode($raw, $client) : ? Caller
     {
+
         // 解析 客户端原始消息
-        $data = msg_decode($raw);
+        $data = json_decode($raw, true);
         if (!is_array($data)) {
 
             echo "decode message error! \n";

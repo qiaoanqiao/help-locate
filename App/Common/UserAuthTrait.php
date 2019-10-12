@@ -17,6 +17,7 @@ use EasySwoole\EasySwoole\Config;
 trait UserAuthTrait
 {
     public $user = [];
+    public $token = '';
 
     /**
      * @return mixed
@@ -28,23 +29,25 @@ trait UserAuthTrait
             return $this->error522('未知客户端请求!', ['client' => '客户端不正确!!']);
         };
         $authToken =  new AuthToken();
-        if(isDebug()) {
-            $userData = (new User())->login(config('debug_mobile'));
-            $token = $authToken->generateToken($client, $userData);
-        } else{
-            if(empty($token = ($this->request()->getHeader('user_token'))[0] ?? '')) {
+        if(empty($token = ($this->request()->getHeader('user_token'))[0] ?? '')) {
+            if(isDebug()) {
+                $userData = (new User())->login(config('debug_mobile'));
+                $token = $authToken->generateToken($client, $userData);
+            } else {
                 return $this->error401('当前接口需要登录!', ['token' => '没有客户凭证!']);
-            };
-
-            $tokenClientConf = Config::getInstance()->getConf('token_client');
-            if(!isset($tokenClientConf[$client])) {
-                return $this->error403('不存在的客户端!', ['client' => '客户端不正确!!']);
             }
+
+        };
+        $tokenClientConf = Config::getInstance()->getConf('token_client');
+        if(!isset($tokenClientConf[$client])) {
+            return $this->error403('不存在的客户端!', ['client' => '客户端不正确!!']);
         }
+
 
         if(is_string($data = $authToken->getTokenAsData($client, $token))) {
             return $this->error401($data);
         }
+        $this->token = $token;
         $this->user = $data;
 
         return true;

@@ -33,14 +33,17 @@ class UserLocationMigration extends AbstractMigration
     {
 // create the table
         $table = $this->table('user_location');
-        $table->addColumn('locate_mode', 'string',  ['limit' => 30, 'default' => ''])
+        $table->addColumn('user_id', 'integer',  ['limit' => 11, 'default' => 0])
+            ->addColumn('locate_mode', 'string',  ['limit' => 30, 'default' => ''])
             ->addColumn('latitude', 'string',  ['limit' => 50, 'default' => ''])
             ->addColumn('longitude', 'string',  ['limit' => 50, 'default' => ''])
             ->addColumn('accuracy', 'string',  ['limit' => 50, 'default' => ''])
             ->addColumn('verticalAccuracy', 'string',  ['limit' => 255, 'default' => ''])
             ->addColumn('type', 'string',  ['limit' => 10, 'default' => 'gcj02'])
+            ->addColumn('client', 'string',  ['limit' => 10, 'default' => 'applet'])
             ->addColumn('speed', 'string',  ['limit' => 10, 'default' => ''])
             ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addIndex(['user_id'])
             ->create();
     }
 }

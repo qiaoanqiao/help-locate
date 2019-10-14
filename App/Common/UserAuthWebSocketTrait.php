@@ -14,14 +14,14 @@ use EasySwoole\EasySwoole\Config;
  * Trait UserAuth
  * @package App\Common
  */
-trait UserAuthTrait
+trait UserAuthWebSocketTrait
 {
     public $user = [];
     public $token = '';
 
     public function getAuthData($key)
     {
-        return ($this->request()->getHeader($key))[0] ?? '';
+        return $this->caller()->getArgs()[$key] ?? '';
     }
 
     /**

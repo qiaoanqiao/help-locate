@@ -31,7 +31,11 @@ trait UserAuthTrait
     public function leadMiddleware()
     {
         if(empty($client = $this->getAuthData('client'))) {
-            return $this->error522('未知客户端请求!', ['client' => '客户端不正确!!']);
+            if(isDebug()) {
+                $client = 'android';
+            } else {
+                return $this->error522('未知客户端请求!', ['client' => '客户端不正确!!']);
+            }
         };
         $authToken =  new AuthToken();
         if(empty($token = $this->getAuthData('user_token'))) {
@@ -41,13 +45,11 @@ trait UserAuthTrait
             } else {
                 return $this->error401('当前接口需要登录!', ['token' => '没有客户凭证!']);
             }
-
         };
         $tokenClientConf = Config::getInstance()->getConf('token_client');
         if(!isset($tokenClientConf[$client])) {
             return $this->error403('不存在的客户端!', ['client' => '客户端不正确!!']);
         }
-
 
         if(is_string($data = $authToken->getTokenAsData($client, $token))) {
             return $this->error401($data);

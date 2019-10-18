@@ -7,9 +7,9 @@ use EasySwoole\Mysqli\Exceptions\ConnectFail;
 use EasySwoole\Mysqli\Exceptions\PrepareQueryFail;
 
 /** @ODM\Document */
-class UserLocation extends Base
+class Relation extends Base
 {
-    public $tableName = "user_locations";
+    public $tableName = "relations";
 
     /**
      * @param $data
@@ -32,4 +32,21 @@ class UserLocation extends Base
         ];
         $this->insert($locationData);
     }
+
+    /**
+     * @param $userId
+     * @throws ConnectFail
+     * @throws PrepareQueryFail
+     * @throws \Throwable
+     */
+    public function userRelation($userId)
+    {
+        return $this->db->where('user_id', $userId)->get($this->tableName, null, ['friend_id', 'group_id', 'config_id', 'created_at']);
+    }
+
+    public function with()
+    {
+    }
+
+
 }

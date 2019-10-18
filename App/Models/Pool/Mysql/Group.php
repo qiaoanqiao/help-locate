@@ -7,9 +7,9 @@ use EasySwoole\Mysqli\Exceptions\ConnectFail;
 use EasySwoole\Mysqli\Exceptions\PrepareQueryFail;
 
 /** @ODM\Document */
-class UserLocation extends Base
+class Group extends Base
 {
-    public $tableName = "user_locations";
+    public $tableName = "groups";
 
     /**
      * @param $data

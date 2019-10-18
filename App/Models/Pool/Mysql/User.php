@@ -9,7 +9,7 @@ use EasySwoole\Mysqli\Exceptions\PrepareQueryFail;
 /** @ODM\Document */
 class User extends Base
 {
-    public $tableName = "user";
+    public $tableName = "users";
 
     public function mobileCreateUser($mobile, $password)
     {

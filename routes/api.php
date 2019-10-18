@@ -11,3 +11,5 @@ $router->post('/validate/send-sms-code', '/Validation/sendSmsCode');
 $router->post('/user/register', '/UserAuth/register');
 $router->post('/user/login', '/UserAuth/login');
 $router->get('/user/personal-center', '/UserInformation/personalCenter');
+
+$router->get('/user/relation', '/UserRelation/index');

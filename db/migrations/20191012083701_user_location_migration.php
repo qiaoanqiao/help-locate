@@ -32,7 +32,7 @@ class UserLocationMigration extends AbstractMigration
     public function change()
     {
 // create the table
-        $table = $this->table('user_location');
+        $table = $this->table('user_locations');
         $table->addColumn('user_id', 'integer',  ['limit' => 11, 'default' => 0])
             ->addColumn('locate_mode', 'string',  ['limit' => 30, 'default' => ''])
             ->addColumn('latitude', 'string',  ['limit' => 50, 'default' => ''])

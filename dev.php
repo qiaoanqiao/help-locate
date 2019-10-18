@@ -9,6 +9,7 @@
 return [
     'SERVER_NAME' => "EasySwoole",
     'MAIN_SERVER' => [
+        'TASK' => ['workerNum'=>4,'maxRunningNum'=>128,'timeout'=>15],
         'LISTEN_ADDRESS' => '0.0.0.0',
         'PORT' => 9501,
         'SERVER_TYPE' => EASYSWOOLE_WEB_SOCKET_SERVER, //可选为 EASYSWOOLE_SERVER  EASYSWOOLE_WEB_SERVER EASYSWOOLE_WEB_SOCKET_SERVER,EASYSWOOLE_REDIS_SERVER

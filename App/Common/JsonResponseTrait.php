@@ -1,6 +1,8 @@
 <?php
 namespace App\Common;
 
+use Illuminate\Support\Debug\Dumper;
+
 trait JsonResponseTrait
 {
     /**

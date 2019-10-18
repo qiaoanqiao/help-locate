@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class EquipmentRecordMigration extends AbstractMigration
+class RelationConfigMigration extends AbstractMigration
 {
     /**
      * Change Method.
@@ -31,11 +31,14 @@ class EquipmentRecordMigration extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('equipment_records');
-        $table->addColumn('device_name', 'integer')
-            ->addColumn('imei', 'string',  ['limit' => 256, 'default' => '']) //android 标识
-            ->addColumn('idfa', 'string',  ['limit' => 30, 'default' => '']) //ios 标识
-            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP']) //设备创建时间
+        $relationshipBetweenExtensionSet = $this->table('relation_config');
+        $relationshipBetweenExtensionSet->addColumn('relation_id', 'integer',  ['limit' => 11, 'default' => 0])
+            ->addColumn('user_id', 'integer',  ['limit' => 11, 'default' => 0])
+            ->addColumn('shar_position', 'boolean',  ['default' => 0])
+            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addIndex(['user_id', 'relation_id'])
             ->create();
+
+
     }
 }

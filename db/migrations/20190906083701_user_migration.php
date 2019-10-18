@@ -31,8 +31,7 @@ class UserMigration extends AbstractMigration
      */
     public function change()
     {
-// create the table
-        $table = $this->table('user');
+        $table = $this->table('users');
         $table->addColumn('name', 'string',  ['limit' => 30, 'default' => ''])
             ->addColumn('note_name', 'string',  ['limit' => 30, 'default' => ''])
             ->addColumn('mobile', 'string',  ['limit' => 30, 'default' => ''])

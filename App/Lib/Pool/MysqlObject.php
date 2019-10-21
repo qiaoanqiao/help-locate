@@ -1,12 +1,13 @@
 <?php
 namespace App\Lib\Pool;
-use EasySwoole\Component\Pool\PoolObjectInterface;
-use EasySwoole\Mysqli\Mysqli;
+use EasySwoole\ORM\DbManager;
+use EasySwoole\Pool\ObjectInterface;
 
-class MysqlObject extends Mysqli implements PoolObjectInterface
+class MysqlObject implements ObjectInterface
 {
     function gc()
     {
+        DbManager::getInstance();
         // 重置为初始状态
         $this->resetDbStatus();
         // 关闭数据库连接

@@ -17,3 +17,7 @@
 #### server
 
 * [x] 有空列出
+
+### 安装
+1. 环境:
+swoole:./configure --enable-openssl  --enable-http2  --enable-sockets --enable-mysqlnd --with-php-config=/www/server/php/72/bin/php-config

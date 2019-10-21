@@ -15,7 +15,7 @@
     "require": {
         "php": ">=7.1.0",
         "ext-swoole": ">=4.0.3",
-        "easyswoole/easyswoole": "3.x",
+        "easyswoole/easyswoole": "3.3.1",
         "easyswoole/swoole-ide-helper": "^1.0",
         "ext-mongodb": "*",
         "easyswoole/mysqli": "2.x-dev",
@@ -24,7 +24,8 @@
         "ext-redis": "*",
         "vlucas/phpdotenv": "^3.5",
         "easyswoole/socket": "^1.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "easyswoole/orm": "^1.0"
     },
     "require-dev": {
         "composer/composer": "^1.6"

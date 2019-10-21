@@ -18,14 +18,12 @@
         "easyswoole/easyswoole": "3.x",
         "easyswoole/swoole-ide-helper": "^1.0",
         "ext-mongodb": "*",
-        "easyswoole/mysqli": "^1.2",
-        "easyswoole/mysqli-pool": "^1.0",
+        "easyswoole/mysqli": "2.x-dev",
         "robmorgan/phinx": "^0.11.1",
         "easyswoole/verifycode": "3.x",
         "ext-redis": "*",
         "vlucas/phpdotenv": "^3.5",
         "easyswoole/socket": "^1.1",
-        "easyswoole/task": "^1.0",
         "ext-json": "*"
     },
     "require-dev": {
@@ -33,7 +31,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "App/"
+            "App\\": "App/",
+            "Console\\": "Console/"
         },
         "files": [
             "App/helpers.php"

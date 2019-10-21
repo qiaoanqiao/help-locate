@@ -18,6 +18,7 @@ class UserRelation extends BaseController
     {
         $relationModel = new Relation();
         $relationData = $relationModel->userRelation($this->id());
+        var_dump($relationData);
 
         return $this->success200();
     }

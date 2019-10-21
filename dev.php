@@ -67,5 +67,8 @@ return [
         'extraConf' => [],
     ],
     'CONFIGS_DIR' => RUNNING_ROOT . '/App/Config',
-
+    'CONSOLE_CLASS' => [
+        \Console\UserConsole::class,
+        \Console\CommandMakeCommand::class,
+    ]
 ];

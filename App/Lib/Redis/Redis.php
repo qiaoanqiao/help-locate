@@ -5,7 +5,6 @@ ini_set('default_socket_timeout', -1);
 
 //use EasySwoole\Core\AbstractInterface\Singleton;
 use App\Lib\Pool\RedisPool;
-use EasySwoole\Component\Pool\PoolManager;
 use EasySwoole\Component\Singleton;
 
 class Redis
@@ -37,7 +36,7 @@ class Redis
             if($this->redis instanceof \Redis) {
                 $this->redis->close();
             } else {
-                PoolManager::getInstance()->getPool(RedisPool::class)->recycleObj($this->redis);
+                \EasySwoole\Pool\Manager::getInstance()->get('default_redis')->recycleObj($this->redis);
             }
             $this->redis = null;
 //            unset($this->redis);
@@ -53,7 +52,7 @@ class Redis
     {
         if (empty($this->redis)) {
             try {
-                $this->redis = PoolManager::getInstance()->getPool(RedisPool::class)->getObj();
+                $this->redis = \EasySwoole\Pool\Manager::getInstance()->get('default_redis')->getObj();
                 //如果获取不到进程池的对象
             } catch (\Exception $e) {
                 $redisConfig = \EasySwoole\EasySwoole\Config::getInstance()->getConf("REDIS");

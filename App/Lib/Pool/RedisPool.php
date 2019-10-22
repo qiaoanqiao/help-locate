@@ -1,32 +1,32 @@
 <?php
 namespace App\Lib\Pool;
 
-use EasySwoole\Component\Pool\AbstractPool;
-use EasySwoole\Component\Pool\PoolObjectInterface;
-use EasySwoole\EasySwoole\Config;
+use EasySwoole\Pool\Config;
+use EasySwoole\Pool\AbstractPool;
+use EasySwoole\Redis\Config\RedisConfig;
+use EasySwoole\Redis\Redis;
 
-class RedisPool extends AbstractPool
+class RedisPool extends \EasySwoole\Pool\AbstractPool
 {
+    protected $redisConfig;
+
+    /**
+     * 重写构造函数,为了传入redis配置
+     * RedisPool constructor.
+     * @param Config      $conf
+     * @param RedisConfig $redisConfig
+     * @throws \EasySwoole\Pool\Exception\Exception
+     */
+    public function __construct(\EasySwoole\Pool\Config $conf, RedisConfig $redisConfig)
+    {
+        parent::__construct($conf);
+        $this->redisConfig = $redisConfig;
+    }
 
     protected function createObject()
     {
-        if (!extension_loaded('redis')) {
-            throw new \BadFunctionCallException('not support: redis');
-        }
-        $conf = Config::getInstance()->getConf('REDIS');
-        $redis = new RedisObject();
-        $connected = $redis->connect($conf['host'], $conf['port']);
-        if($connected){
-            if(!empty($conf['auth'])){
-                $redis->auth($conf['auth']);
-            }
-            //选择数据库,默认为0
-            if(!empty($conf['db'])){
-                $redis->select($conf['db']);
-            }
-            return $redis;
-        }else{
-            return null;
-        }
+        //根据传入的redis配置进行new 一个redis
+        $redis = new Redis($this->redisConfig);
+        return $redis;
     }
 }

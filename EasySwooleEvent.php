@@ -15,7 +15,6 @@ use App\Lib\Pool\MysqlPool;
 use App\Process\HotReload;
 use App\WebSocket\WebSocketParser;
 use Dotenv\Dotenv;
-use EasySwoole\Component\Pool\PoolManager;
 use EasySwoole\EasySwoole\Crontab\Crontab;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
@@ -23,6 +22,9 @@ use EasySwoole\Http\Request;
 use EasySwoole\Http\Response;
 use EasySwoole\EasySwoole\Config as GConfig;
 use App\Lib\Pool\RedisPool;
+use EasySwoole\ORM\Db\Config as ORMConfig;
+use EasySwoole\ORM\Db\Connection;
+use EasySwoole\ORM\DbManager;
 use EasySwoole\Socket\Dispatcher;
 use App\WebSocket\WebSocketEvent;
 
@@ -41,13 +43,12 @@ class EasySwooleEvent implements Event
 
     /**
      * @param EventRegister $register
-     * @throws \EasySwoole\Component\Pool\Exception\PoolException
-     * @throws \EasySwoole\Component\Pool\Exception\PoolObjectNumError
      * @throws \EasySwoole\Socket\Exception\Exception
      * @throws \Exception
      */
     public static function mainServerCreate(EventRegister $register)
     {
+
         /**
          * **************** websocket控制器 **********************
          */
@@ -76,42 +77,20 @@ class EasySwooleEvent implements Event
             $websocketEvent->onClose($server, $fd, $reactorId);
         });
 
-
-        /**
-         * **************** redis&mysql 连接池 **********************
-         */
-        $config = \EasySwoole\EasySwoole\Config::getInstance();
-
-        $mysqlPoolConf = PoolManager::getInstance()->register(MysqlPool::class);
-        $mysqlConf = $config->getConf('mysql_pool');
-        $mysqlPoolConf->setExtraConf($mysqlConf['extraConf'])
-            ->setGetObjectTimeout($mysqlConf['getObjectTimeout'])
-            ->setIntervalCheckTime($mysqlConf['intervalCheck'])
-            ->setMaxIdleTime($mysqlConf['maxIdleTime'])
-            ->setMaxObjectNum($mysqlConf['maxObjectNum'])
-            ->setMinObjectNum($mysqlConf['minObjectNum']);
-
-        $redisPoolConf = PoolManager::getInstance()->register(RedisPool::class);
-        $redisConf = $config->getConf('redis_pool');
-
-        $redisPoolConf->setExtraConf($redisConf['extraConf'])
-            ->setGetObjectTimeout($redisConf['getObjectTimeout'])
-            ->setIntervalCheckTime($redisConf['intervalCheck'])
-            ->setMaxIdleTime($redisConf['maxIdleTime'])
-            ->setMaxObjectNum($redisConf['maxObjectNum'])
-            ->setMinObjectNum($redisConf['minObjectNum']);
+        self::initPool();
+        self::ipList();
 
         /**
          * **************** 代码修改自动重载 **********************
          */
         if(isDebug()) {
-            $autoReloadBool = $config->getConf('AUTO_RELOAD');
+            $autoReloadBool = config('AUTO_RELOAD');
             if($autoReloadBool === true) {
                 $swooleServer = ServerManager::getInstance()->getSwooleServer();
                 $swooleServer->addProcess((new HotReload('HotReload', ['disableInotify' => false]))->getProcess());
             }
         }
-        self::ipList();
+
     }
 
     public static function onRequest(Request $request, Response $response): bool
@@ -156,6 +135,44 @@ class EasySwooleEvent implements Event
         // 开启IP限流
         IpList::getInstance();
         Crontab::getInstance()->addTask(CurrentLimiter::class);
+    }
+
+    /**
+     * 初始化连接池
+     * @throws \EasySwoole\Pool\Exception\Exception
+     */
+    public static function initPool()
+    {
+        $redisConf = config('redis_pool');
+        $poolConfig = new \EasySwoole\Pool\Config();
+        $poolConfig->setExtraConf($redisConf['extraConf'])
+            ->setGetObjectTimeout($redisConf['getObjectTimeout'])
+            ->setIntervalCheckTime($redisConf['intervalCheck'])
+            ->setMaxIdleTime($redisConf['maxIdleTime'])
+            ->setMaxObjectNum($redisConf['maxObjectNum'])
+            ->setMinObjectNum($redisConf['minObjectNum']);
+        $redisConConfig = config('REDIS');
+        $redisConnectionConf = new \EasySwoole\Redis\Config\RedisConfig();
+        $redisConnectionConf->setHost($redisConConfig['host']);
+        $redisConnectionConf->setPort($redisConConfig['port']);
+        $redisConnectionConf->setAuth($redisConConfig['auth']);
+
+        \EasySwoole\Pool\Manager::getInstance()->register(
+            new RedisPool($poolConfig, $redisConnectionConf),'default_redis'
+        );
+
+        $ORMConfig = new ORMConfig();
+        $mysqlConf = \EasySwoole\EasySwoole\Config::getInstance()->getConf("MYSQL");
+        $ORMConfig->setDatabase($mysqlConf['database']);
+        $ORMConfig->setUser($mysqlConf['user']);
+        $ORMConfig->setPassword($mysqlConf['password']);
+        $ORMConfig->setHost($mysqlConf['host']);
+        $ORMConfig->setGetObjectTimeout(3.0);
+        $ORMConfig->setIntervalCheckTime(30*1000);
+        $ORMConfig->setMaxIdleTime(15);
+        $ORMConfig->setMaxObjectNum(20);
+        $ORMConfig->setMinObjectNum(5);
+        DbManager::getInstance()->addConnection(new Connection($ORMConfig));
     }
 
 }

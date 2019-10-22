@@ -5,7 +5,7 @@ namespace App\Common;
 
 
 use App\Lib\AuthToken;
-use App\Models\Pool\Mysql\User;
+use App\Models\Mysql\User;
 use EasySwoole\EasySwoole\Config;
 
 /**
@@ -78,7 +78,7 @@ trait UserAuthTrait
      */
     public function user()
     {
-        $user = (new User())->find($this->user['id']);
+        $user = (new User())->get(['id' => $this->user['id']])->toArray();
 
         return $user;
     }

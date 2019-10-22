@@ -18,14 +18,17 @@
         "easyswoole/easyswoole": "3.3.1",
         "easyswoole/swoole-ide-helper": "^1.0",
         "ext-mongodb": "*",
-        "easyswoole/mysqli": "2.x-dev",
+        "easyswoole/mysqli": "^2.0",
         "robmorgan/phinx": "^0.11.1",
         "easyswoole/verifycode": "3.x",
         "ext-redis": "*",
         "vlucas/phpdotenv": "^3.5",
         "easyswoole/socket": "^1.1",
         "ext-json": "*",
-        "easyswoole/orm": "^1.0"
+        "easyswoole/orm": "^1.0",
+        "easyswoole/pool": "^1.0",
+        "easyswoole/redis-pool": "^2.0",
+        "easyswoole/task": "^1.0"
     },
     "require-dev": {
         "composer/composer": "^1.6"

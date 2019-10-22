@@ -21,8 +21,13 @@ class CurrentLimiter extends AbstractCronTask
         return 'CurrentLimiter';
     }
 
-    static function run(\swoole_server $server, int $taskId, int $fromWorkerId, $flags = null)
+    public function run(int $taskId, int $workerIndex)
     {
         IpList::getInstance()->clear();
+    }
+
+    function onException(\Throwable $throwable, int $taskId, int $workerIndex)
+    {
+        // TODO: Implement onException() method.
     }
 }

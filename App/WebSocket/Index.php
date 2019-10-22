@@ -8,7 +8,6 @@
 namespace App\WebSocket;
 
 use EasySwoole\EasySwoole\ServerManager;
-use EasySwoole\EasySwoole\Swoole\Task\TaskManager;
 use EasySwoole\Socket\AbstractInterface\Controller;
 
 /**

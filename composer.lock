@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a08b1019c1ac87fb274643550c6a59d8",
+    "content-hash": "6847498bd1b9813ef349e2b1b6e5ca9b",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -730,16 +730,16 @@
         },
         {
             "name": "easyswoole/http",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easy-swoole/http.git",
-                "reference": "642228478ec085f82bcf7137b14f17a41ef0c008"
+                "reference": "1dd718dbc351f139467df905c3707534aebebfae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-swoole/http/zipball/642228478ec085f82bcf7137b14f17a41ef0c008",
-                "reference": "642228478ec085f82bcf7137b14f17a41ef0c008",
+                "url": "https://api.github.com/repos/easy-swoole/http/zipball/1dd718dbc351f139467df905c3707534aebebfae",
+                "reference": "1dd718dbc351f139467df905c3707534aebebfae",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -785,7 +785,7 @@
                 "framework",
                 "swoole"
             ],
-            "time": "2019-10-15T07:41:58+00:00"
+            "time": "2019-10-21T06:52:58+00:00"
         },
         {
             "name": "easyswoole/log",
@@ -835,16 +835,16 @@
         },
         {
             "name": "easyswoole/mysqli",
-            "version": "2.x-dev",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easy-swoole/mysqli.git",
-                "reference": "751966f6cb564cbc8a3bea7a248239a85d313d4b"
+                "reference": "40ea1bdec7a579503dd5f2798b31f113ba85512a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-swoole/mysqli/zipball/751966f6cb564cbc8a3bea7a248239a85d313d4b",
-                "reference": "751966f6cb564cbc8a3bea7a248239a85d313d4b",
+                "url": "https://api.github.com/repos/easy-swoole/mysqli/zipball/40ea1bdec7a579503dd5f2798b31f113ba85512a",
+                "reference": "40ea1bdec7a579503dd5f2798b31f113ba85512a",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -885,7 +885,7 @@
                 "framework",
                 "swoole"
             ],
-            "time": "2019-10-17T02:09:23+00:00"
+            "time": "2019-10-21T06:15:16+00:00"
         },
         {
             "name": "easyswoole/orm",
@@ -1000,6 +1000,116 @@
                 "swoole"
             ],
             "time": "2019-10-16T08:15:02+00:00"
+        },
+        {
+            "name": "easyswoole/redis",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easy-swoole/redis.git",
+                "reference": "471019af4b3ecaead8741107509b28b6a69b6239"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easy-swoole/redis/zipball/471019af4b3ecaead8741107509b28b6a69b6239",
+                "reference": "471019af4b3ecaead8741107509b28b6a69b6239",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "easyswoole/spl": "^1.2",
+                "ext-swoole": "^4.4.0",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "easyswoole/phpunit": ">=1.0.0",
+                "easyswoole/swoole-ide-helper": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasySwoole\\Redis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "YF",
+                    "email": "291323003@qq.com"
+                }
+            ],
+            "description": "easyswoole component",
+            "homepage": "https://www.easyswoole.com/",
+            "keywords": [
+                "async",
+                "easyswoole",
+                "framework",
+                "swoole"
+            ],
+            "time": "2019-10-17T09:49:18+00:00"
+        },
+        {
+            "name": "easyswoole/redis-pool",
+            "version": "2.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/easy-swoole/redis-pool.git",
+                "reference": "8958e83e0e70997fdb8309112b76f83857a00037"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/easy-swoole/redis-pool/zipball/8958e83e0e70997fdb8309112b76f83857a00037",
+                "reference": "8958e83e0e70997fdb8309112b76f83857a00037",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "easyswoole/component": "^2.0",
+                "easyswoole/pool": "^1.0",
+                "easyswoole/redis": "^1.0",
+                "easyswoole/spl": "^1.1"
+            },
+            "require-dev": {
+                "easyswoole/swoole-ide-helper": "^1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasySwoole\\RedisPool\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "YF",
+                    "email": "291323003@qq.com"
+                }
+            ],
+            "description": "An efficient swoole framework",
+            "homepage": "https://www.easyswoole.com/",
+            "keywords": [
+                "async",
+                "easyswoole",
+                "framework",
+                "swoole"
+            ],
+            "time": "2019-10-18T03:12:27+00:00"
         },
         {
             "name": "easyswoole/socket",
@@ -1286,16 +1396,16 @@
         },
         {
             "name": "easyswoole/validate",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/easy-swoole/validate.git",
-                "reference": "732e930597d6a1945e531b5066cac7ecaef16e15"
+                "reference": "ae03b588b52392d41d8bf26345b4884e004ad6a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-swoole/validate/zipball/732e930597d6a1945e531b5066cac7ecaef16e15",
-                "reference": "732e930597d6a1945e531b5066cac7ecaef16e15",
+                "url": "https://api.github.com/repos/easy-swoole/validate/zipball/ae03b588b52392d41d8bf26345b4884e004ad6a0",
+                "reference": "ae03b588b52392d41d8bf26345b4884e004ad6a0",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -1335,7 +1445,7 @@
                 "framework",
                 "swoole"
             ],
-            "time": "2019-07-20T15:39:34+00:00"
+            "time": "2019-10-21T07:07:10+00:00"
         },
         {
             "name": "easyswoole/verifycode",
@@ -3247,9 +3357,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "easyswoole/mysqli": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

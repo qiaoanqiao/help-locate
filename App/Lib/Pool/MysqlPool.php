@@ -16,11 +16,13 @@ class MysqlPool extends AbstractPool
     protected function createObject()
     {
         $config = new Config();
-        $config->setDatabase('easyswoole_orm');
-        $config->setUser('root');
-        $config->setPassword('');
-        $config->setHost('127.0.0.1');
-        $conf = Config::getInstance()->getConf("MYSQL");
+        $conf = config("MYSQL");
+        $config->setDatabase($conf['database']);
+        $config->setUser($conf['user']);
+        $config->setPassword($conf['password']);
+        $config->setHost($conf['host']);
+        DbManager::getInstance()->addConnection(new Connection($config));
+
         $dbConf = new \EasySwoole\Mysqli\Config($conf);
         return new MysqlObject($dbConf);
     }

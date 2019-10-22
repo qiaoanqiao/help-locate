@@ -4,13 +4,12 @@ namespace App\HttpController;
 
 use App\Common\BaseController;
 use App\Lib\AuthToken;
-use App\Models\Pool\Mysql\User;
+use App\Models\Mysql\User;
 use App\ModelTransform\UserTransform;
 use App\RequestValidate\UserLoginRequest;
 use App\RequestValidate\UserRegisterRequest;
 use EasySwoole\EasySwoole\Config;
 use EasySwoole\Validate\Validate;
-use SuperClosure\Analyzer\Token;
 
 /**
  * Class Index

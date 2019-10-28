@@ -25,7 +25,7 @@
         "vlucas/phpdotenv": "^3.5",
         "easyswoole/socket": "^1.1",
         "ext-json": "*",
-        "easyswoole/orm": "^1.0",
+        "easyswoole/orm": "dev-master",
         "easyswoole/pool": "^1.0",
         "easyswoole/redis-pool": "^2.0",
         "easyswoole/task": "^1.0"

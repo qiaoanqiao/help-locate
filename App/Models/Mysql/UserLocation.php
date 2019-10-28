@@ -1,23 +1,20 @@
 <?php
-namespace App\Models\Pool\Mysql;
+namespace App\Models\Mysql;
 
-
-use App\Models\Pool\Mysql\Base;
-use EasySwoole\Mysqli\Exceptions\ConnectFail;
-use EasySwoole\Mysqli\Exceptions\PrepareQueryFail;
+use App\Models\Mysql\BaseMysqlModel;
 
 /** @ODM\Document */
-class RelationConfig extends Base
+class UserLocation extends BaseMysqlModel
 {
-    public $tableName = "relation_configs";
+    public $tableName = "user_locations";
 
     /**
      * @param $data
-     * @throws ConnectFail
-     * @throws PrepareQueryFail
+     * @return bool|int
+     * @throws \EasySwoole\ORM\Exception\Exception
      * @throws \Throwable
      */
-    public function create($data)
+    public function createSelf($data)
     {
         $locationData = [
             'user_id' => $data['user_id'] ?? 0,
@@ -30,6 +27,8 @@ class RelationConfig extends Base
             'client' => $data['client'] ?? 'applet',
             'speed' => $data['speed'] ?? '',
         ];
-        $this->insert($locationData);
+
+        $model = new self($locationData);
+        return $model->save();
     }
 }

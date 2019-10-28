@@ -3,39 +3,23 @@ namespace App\Models\Mysql;
 
 
 use EasySwoole\ORM\AbstractModel;
-use EasySwoole\ORM\DbManager;
-use EasySwoole\ORM\Utility\Schema\Table;
 
 /** @ODM\Document */
-class User extends AbstractModel
+class User extends BaseMysqlModel
 {
     public $tableName = "users";
 
     /**
-     * 表的定义
-     * 此处需要返回一个 EasySwoole\ORM\Utility\Schema\Table
-     * @return Table
+     * 使用手机号和密码创建用户
+     * @param $mobile
+     * @param $password
+     * @return bool
+     * @throws \EasySwoole\ORM\Exception\Exception
+     * @throws \Throwable
      */
-    protected function schemaInfo(): Table
+    public function mobileCreateSelf($mobile, $password)
     {
-        $table = new Table('users');
-        $table->colInt('id')->setIsPrimaryKey(true);
-        $table->colVarChar('name', 30);
-        $table->colVarChar('note_name', 30);
-        $table->colVarChar('mobile', 30);
-        $table->colVarChar('password', 125);
-        $table->colVarChar('email', 40);
-        $table->colVarChar('avatar', 125);
-        $table->colVarChar('wx_id', 100);
-        $table->colTinyInt('is_vip', 1);
-        $table->colTimestamp('created')->setDefaultValue('CURRENT_TIMESTAMP');
-        return $table;
-    }
-
-    public function mobileCreateUser($mobile, $password)
-    {
-        /** @var AbstractModel $model */
-        $model = new $this([
+        $model = new self([
             [
                 'name' => $this->defaultName(),
                 'note_name' => $this->defaultNoteName(),
@@ -57,9 +41,7 @@ class User extends AbstractModel
     public function defaultName()
     {
         try {
-            $model = User::create()->field('id')->withTotalCount();
-            $model->all();
-            $count = $model->lastQueryResult()->getTotalCount();
+            $count = $model = User::create()->count('id');
             return '默认昵称_' . $count;
         } catch (\Throwable $e) {
             return 1;

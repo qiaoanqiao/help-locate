@@ -40,7 +40,7 @@ class UserAuth extends BaseController
             return $this->error522('您的手机号已被注册!', ['mobile' => '您的手机号已被注册!']);
         }
         $passwordHash = $this->encryption($password);
-        $insertStatus = $user->mobileCreateUser($mobile, $passwordHash);
+        $insertStatus = $user->mobileCreateSelf($mobile, $passwordHash);
 
         if($insertStatus) {
             return $this->success200('注册成功!');
